@@ -24,13 +24,13 @@ jobs:
       - name: Scan the image
         uses: aquasecurity/trivy-action@master
         with:
-        image-ref: '${{github.event.inputs.REGISTRY_LOGIN_SERVER}}/${{github.event.inputs.repository_name}}:${{github.event.inputs.sha}}'
-        format: 'sarif'
-        output: 'trivy-results.sarif'
-        exit-code: '1'
-        ignore-unfixed: true
-        vuln-type: 'os,library'
-        severity: 'CRITICAL,HIGH,MEDIUM,LOW'
+          image-ref: '${{github.event.inputs.REGISTRY_LOGIN_SERVER}}/${{github.event.inputs.repository_name}}:${{github.event.inputs.sha}}'
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH,MEDIUM,LOW'
 
       - name: Upload Trivy scan results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v1
