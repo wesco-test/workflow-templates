@@ -1,11 +1,21 @@
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_call:
+    secrets:
+      REGISTRY_LOGIN_SERVER:
+        required: true
+        type: string
+#      repository_name:
+#        required: true
+#        type: string
+#      sha:
+#        required: true
+#        type: string
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "Container Security"
-  Container_Security:
+  # This workflow contains a single job called Container Security
+  container_security:
     name: Container Security
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -15,7 +25,7 @@ jobs:
       - name: Scan the image
         uses: aquasecurity/trivy-action@master
         with:
-        image-ref: '${{secrets.REGISTRY_LOGIN_SERVER}}/${{github.event.repository.name}}:${{github.sha}}'
+        image-ref: '${{github.event.inputs.REGISTRY_LOGIN_SERVER}}/${{github.event.inputs.repository_name}}:${{github.event.inputs.sha}}'
         format: 'sarif'
         output: 'trivy-results.sarif'
         exit-code: '1'
